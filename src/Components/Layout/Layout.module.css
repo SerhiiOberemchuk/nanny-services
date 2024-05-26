@@ -1,0 +1,8 @@
+.layout {
+    border-radius: 30px;
+    padding: 30px;
+    margin-right: auto;
+    margin-left: auto;
+    position: relative;
+    max-width: 1440px;
+}

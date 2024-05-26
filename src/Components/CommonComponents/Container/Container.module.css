@@ -1,0 +1,12 @@
+.contairer {
+    max-width: 1248px;
+    padding-left: 32px;
+    padding-right: 32px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: transparent;
+}
+
+.contairerLogined {
+    background-color:var(--primary-color) ;
+}

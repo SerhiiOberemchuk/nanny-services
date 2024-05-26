@@ -1,0 +1,109 @@
+.titleModal {
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 40px;
+    line-height: 120%;
+    letter-spacing: -0.02em;
+    color: #11101c;
+    margin-bottom: 20px;
+}
+
+.modalFormSection {
+    position: relative;
+}
+
+.closeButton {
+    background-color: transparent;
+    position: absolute;
+    right: -20px;
+    top: -20px;
+}
+
+.iconSvg {
+    stroke: var(--text-color-black);
+    width: 32px;
+    height: 32px;
+    transition: transform 0.3s ease-in-out, stroke 0.3s ease-in-out;
+}
+
+
+.closeButton:hover .iconSvg {
+    transform: scale(1.1);
+    stroke: var(--primary-color);
+}
+
+.modalDescription {
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 125%;
+    color: rgba(17, 16, 28, 0.5);
+    margin-bottom: 40px;
+}
+
+.formField {
+    display: flex;
+    flex-direction: column;
+    gap: 18px
+}
+
+.inputField {
+    position: relative;
+
+}
+
+.input {
+    border: 1px solid rgba(17, 16, 28, 0.1);
+    border-radius: 12px;
+    padding: 16px 18px 16px 120px;
+    width: 100%;
+}
+
+.fieldLabel {
+    position: absolute;
+    top: 16px;
+    left: 18px;
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 125%;
+    color: #11101c;
+}
+
+.iconPassword {
+    fill: white;
+    stroke: black;
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s ease-in-out, stroke 0.3s ease-in-out;
+}
+
+.buttonPassword {
+    cursor: pointer;
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+}
+
+.buttonPassword:hover .iconPassword {
+    transform: scale(1.1);
+    stroke: var(--primary-color);
+}
+
+
+.buttonSubmit {
+    margin-top: 40px;
+    background-color: var(--primary-color);
+    border-radius: 30px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.buttonSubmit:hover {
+    transform: scale(1.01);
+}

@@ -1,0 +1,22 @@
+:root {
+    --font-family: "Helvetica Neue", sans-serif;
+    --primary-color: #f03f3b;
+    --text-color-white: #fbfbfb;
+    --text-color-black: #11101c;
+    --text-color-gray: rgba(17, 16, 28, 0.5);
+}
+
+body {
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 150%;
+    color: var(--text-color-white);
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    background-color: var(--primary-color);
+    color: var(--text-color-white);
+}
