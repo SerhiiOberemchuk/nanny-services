@@ -107,3 +107,7 @@
 .buttonSubmit:hover {
     transform: scale(1.01);
 }
+
+.errorsSchema {
+    color: var(--primary-color);
+}

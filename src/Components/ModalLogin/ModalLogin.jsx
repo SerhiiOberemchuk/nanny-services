@@ -1,11 +1,12 @@
 import Modal from "react-modal";
 import { useDispatch, useSelector } from "react-redux";
-import { Field, Form, Formik } from "formik";
 import style from "./Modal.module.css";
 import icons from "../../assets/icons/iconsSprite.svg";
 import { closeModalLoginRegistration } from "../../redux/users/usersSlice";
-import { useState } from "react";
 import { TYPE_MODAL } from "../../Constans/constans";
+
+import FormInput from "./FormInput";
+import { modalWindowContent } from "./modalContent";
 
 const customStyles = {
   content: {
@@ -22,34 +23,17 @@ const customStyles = {
   },
 };
 
-const modalWindowContent = {
-  titleLogin: "Log In",
-  titleRegistration: "Registration",
-  descriptionLogin:
-    "Welcome back! Please enter your credentials to access your account and continue your babysitter search.",
-  descriptionRegistration:
-    "Thank you for your interest in our platform! In order to register, we need some information. Please provide us with the following information.",
-  titleButtonLogin: "Log In",
-  titleButtonRegistration: "Sign Up",
-};
-
 Modal.setAppElement("#root");
 
 function ModalLogin() {
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const { isModalLoginRegistration, modalType } = useSelector(
     (state) => state.users
   );
   const dispatch = useDispatch();
-  console.log(modalType);
+
   function handleCloseModal() {
     dispatch(closeModalLoginRegistration());
   }
-
-  function handleShowPassword() {
-    setIsPasswordVisible((prev) => !prev);
-  }
-  const iconShowPassword = isPasswordVisible ? "#icon-eye" : "#icon-eyeOff";
 
   return (
     <div>
@@ -77,65 +61,7 @@ function ModalLogin() {
             {modalType === TYPE_MODAL.registration &&
               modalWindowContent.descriptionRegistration}
           </p>
-
-          <Formik
-            initialValues={{
-              name: "",
-              email: "",
-              password: "",
-            }}
-            onSubmit={() => {
-              console.log("form submit:");
-            }}
-          >
-            <Form className={style.formField}>
-              {modalType === TYPE_MODAL.registration && (
-                <div className={style.inputField}>
-                  <label htmlFor="name" className={style.fieldLabel}>
-                    Name
-                  </label>
-                  <Field id="name" name="name" className={style.input}></Field>
-                </div>
-              )}
-              <div className={style.inputField}>
-                <label htmlFor="email" className={style.fieldLabel}>
-                  Email
-                </label>
-                <Field
-                  id="email"
-                  name="email"
-                  type="email"
-                  className={style.input}
-                ></Field>
-              </div>
-              <div className={style.inputField}>
-                <label htmlFor="password" className={style.fieldLabel}>
-                  Password
-                </label>
-                <Field
-                  id="password"
-                  name="password"
-                  type={`${isPasswordVisible ? "text" : "password"}`}
-                  className={style.input}
-                ></Field>
-                <button
-                  type="button"
-                  className={style.buttonPassword}
-                  onClick={handleShowPassword}
-                >
-                  <svg className={style.iconPassword}>
-                    <use href={`${icons}${iconShowPassword}`}></use>
-                  </svg>
-                </button>
-              </div>
-              <button type="submit" className={style.buttonSubmit}>
-                {modalType === TYPE_MODAL.login &&
-                  modalWindowContent.titleButtonLogin}
-                {modalType === TYPE_MODAL.registration &&
-                  modalWindowContent.titleButtonRegistration}
-              </button>
-            </Form>
-          </Formik>
+          <FormInput />
         </section>
       </Modal>
     </div>

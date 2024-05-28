@@ -2,8 +2,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* width: 100%;
-    max-width: 1184px; */
 }
 
 .titleNanny {
@@ -17,11 +15,11 @@
     justify-content: space-between;
     width: 100%;
     max-width: 533px;
+    align-items: center;
 }
 
 .navigationList {
     display: flex;
-    align-items: center;
     gap: 40px;
 }
 
@@ -34,7 +32,23 @@
 }
 
 .navLink:hover {
-    color: var(--primary-color);
+    transform: scale(1.1);
+}
+
+.active {
+    position: relative;
+}
+
+.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--text-color-white);
 }
 
 .buttonList {
@@ -62,4 +76,44 @@
 .registerButton:hover {
     background: #fbfbfb;
     color: var(--primary-color);
+}
+
+.listLogout {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+}
+
+.logoutButton {
+    border: 1px solid rgba(251, 251, 251, 0.4);
+    border-radius: 30px;
+    padding: 14px 39px;
+}
+
+.logoutButton:hover {
+    background: #fbfbfb;
+    color: var(--primary-color);
+}
+
+.icondiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background-color: var(--text-color-white);
+}
+
+.iconUser {
+    width: 24px;
+    height: 24px;
+
+    fill: var(--primary-color);
+}
+
+.userName {
+    display: flex;
+    gap: 14px;
+    align-items: center;
 }
