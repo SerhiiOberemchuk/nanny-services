@@ -1,25 +1,46 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { instansApi } from "../../Api/api";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { auth, bdFirestore } from "../../Api/firebaseConfig";
+import { doc, setDoc } from "firebase/firestore";
 
-export const userSignIn = createAsyncThunk("users", async (user, thunkAPI) => {
-  try {
-    const data = await instansApi.post("/users/signup", {
-      name: user.name,
-      email: user.email,
-      password: user.password,
-    });
-    return data;
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error.message);
+export const userSignUp = createAsyncThunk(
+  "user/signUp",
+  async ({ name, email, password }, thunkAPI) => {
+    try {
+      const response = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = response.user;
+      console.log(user);
+
+      await setDoc(doc(bdFirestore, "users", user.uid), {
+        uid: user.uid,
+        email: user.email,
+        name,
+      });
+
+      return { email: user.email, name };
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
   }
-});
+);
 
 export const userLogIn = createAsyncThunk(
-  "users",
-  async ({ email, password }, thunkAPI) => {
+  "user/logIn",
+  async (user, thunkAPI) => {
     try {
-      const data = await instansApi.get("/users/login", { email, password });
-      return data;
+      const currentUser = await signInWithEmailAndPassword(
+        auth,
+        user.email,
+        user.password
+      );
+      return { name: currentUser.name, email: currentUser.email };
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }

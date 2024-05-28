@@ -1,5 +1,9 @@
 export const initialState = {
   isModalLoginRegistration: false,
   modalType: null,
-  isLoggedIn: true,
+  isLoggedIn: false,
+  loading: false,
+  error: false,
+  userName: "",
+  userEmail: "",
 };

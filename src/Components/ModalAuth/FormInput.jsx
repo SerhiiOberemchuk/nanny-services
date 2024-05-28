@@ -1,15 +1,18 @@
 import { Field, Form, Formik } from "formik";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import style from "./Modal.module.css";
 import { LoginSchema, SignupSchema } from "./usersSchema";
 import { TYPE_MODAL } from "../../Constans/constans";
 import { useState } from "react";
 import icons from "../../assets/icons/iconsSprite.svg";
 import { modalWindowContent } from "./modalContent";
+import { userSignUp } from "../../redux/users/operation";
 
 function FormInput() {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const { modalType } = useSelector((state) => state.users);
+  const dispatch = useDispatch();
+
   function handleShowPassword() {
     setIsPasswordVisible((prev) => !prev);
   }
@@ -24,7 +27,10 @@ function FormInput() {
       validationSchema={
         modalType === TYPE_MODAL.registration ? SignupSchema : LoginSchema
       }
-      onSubmit={() => console.log("form submit:")}
+      onSubmit={(values) => {
+        dispatch(userSignUp(values));
+        console.log(values);
+      }}
     >
       {({ errors, touched }) => (
         <Form className={style.formField}>

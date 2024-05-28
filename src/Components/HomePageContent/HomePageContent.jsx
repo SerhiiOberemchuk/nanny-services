@@ -1,13 +1,13 @@
 import style from "./HomePageContent.module.css";
 import icons from "../../assets/icons/iconsSprite.svg";
 import Header from "../Header/Header";
-import ModalLogin from "../ModalLogin/ModalLogin";
 import { useDispatch } from "react-redux";
 import {
   openModalLoginRegistration,
   setTypeOfModalLoginRegistration,
 } from "../../redux/users/usersSlice";
 import { TYPE_MODAL } from "../../Constans/constans";
+import ModalAuth from "../ModalAuth/ModalAuth";
 
 function HomePageContent() {
   const dispatch = useDispatch();
@@ -47,7 +47,7 @@ function HomePageContent() {
           </div>
         </div>
       </section>
-      <ModalLogin />
+      <ModalAuth />
     </section>
   );
 }

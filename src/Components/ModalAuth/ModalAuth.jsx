@@ -25,7 +25,7 @@ const customStyles = {
 
 Modal.setAppElement("#root");
 
-function ModalLogin() {
+function ModalAuth() {
   const { isModalLoginRegistration, modalType } = useSelector(
     (state) => state.users
   );
@@ -68,4 +68,4 @@ function ModalLogin() {
   );
 }
 
-export default ModalLogin;
+export default ModalAuth;

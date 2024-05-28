@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { initialState } from "./initialState";
+import { userSignUp } from "./operation";
 
 export const usersSlice = createSlice({
   name: "users",
@@ -16,9 +17,18 @@ export const usersSlice = createSlice({
       state.modalType = payload;
     },
   },
-  //   extraReducers: (builder) => {
-  //     builder.addCase();
-  //   },
+  extraReducers: (builder) => {
+    builder.addCase(userSignUp.pending, (state) => {
+      state.loading = true;
+      state.error = false;
+    });
+    builder.addCase(userSignUp.fulfilled, (state, action) => {
+      state.loading = false;
+    });
+    builder.addCase(userSignUp.rejected, (state, action) => {
+      state.loading = false;
+    });
+  },
 });
 
 export const {
