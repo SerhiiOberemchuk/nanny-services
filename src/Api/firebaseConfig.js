@@ -2,14 +2,24 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
+const {
+  VITE_API_KEY,
+  VITE_AUTH_DOMAIN,
+  VITE_PROJECT_ID,
+  VITE_STORAGE_BUCKET,
+  VITE_MESSAGING_SENDER_ID,
+  VITE_APP_ID,
+  VITE_MEASUREMENT_ID,
+} = import.meta.env;
+
 const firebaseConfig = {
-  apiKey: "AIzaSyA4nBZ-XIXibrBiYiFcZkqDHX1awz5gLg0",
-  authDomain: "best-nannies.firebaseapp.com",
-  projectId: "best-nannies",
-  storageBucket: "best-nannies.appspot.com",
-  messagingSenderId: "161954768105",
-  appId: "1:161954768105:web:dc55f82da0acc243dfbc78",
-  measurementId: "G-PSG4ZB3QEF",
+  apiKey: VITE_API_KEY,
+  authDomain: VITE_AUTH_DOMAIN,
+  projectId: VITE_PROJECT_ID,
+  storageBucket: VITE_STORAGE_BUCKET,
+  messagingSenderId: VITE_MESSAGING_SENDER_ID,
+  appId: VITE_APP_ID,
+  measurementId: VITE_MEASUREMENT_ID,
 };
 
 const app = initializeApp(firebaseConfig);

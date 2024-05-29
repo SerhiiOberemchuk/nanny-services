@@ -7,6 +7,8 @@ import { useState } from "react";
 import icons from "../../assets/icons/iconsSprite.svg";
 import { modalWindowContent } from "./modalContent";
 import { userSignUp } from "../../redux/users/operation";
+import { collection, getDocs, setDoc } from "firebase/firestore";
+import { bdFirestore } from "../../Api/firebaseConfig";
 
 function FormInput() {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -17,6 +19,19 @@ function FormInput() {
     setIsPasswordVisible((prev) => !prev);
   }
   const iconShowPassword = isPasswordVisible ? "#icon-eye" : "#icon-eyeOff";
+
+  const usersss = async () => {
+    try {
+      const data = await getDocs(collection(bdFirestore, "users"));
+      const basedata = data.docs.map((docs) => ({
+        ...docs.data(),
+      }));
+      console.log(basedata);
+      return data;
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <Formik
       initialValues={{
@@ -28,8 +43,12 @@ function FormInput() {
         modalType === TYPE_MODAL.registration ? SignupSchema : LoginSchema
       }
       onSubmit={(values) => {
-        dispatch(userSignUp(values));
-        console.log(values);
+        // dispatch(userSignUp(values));
+        // setDoc(collection(bdFirestore, "users"), {
+        //   name: "serhii",
+        //   email: "w@w.we",
+        //   uid: "dfdsfdsfdsfef3453242353",
+        // });
       }}
     >
       {({ errors, touched }) => (
@@ -82,7 +101,11 @@ function FormInput() {
               </svg>
             </button>
           </div>
-          <button type="submit" className={style.buttonSubmit}>
+          <button
+            type="submit"
+            className={style.buttonSubmit}
+            onClick={usersss}
+          >
             {modalType === TYPE_MODAL.login &&
               modalWindowContent.titleButtonLogin}
             {modalType === TYPE_MODAL.registration &&
