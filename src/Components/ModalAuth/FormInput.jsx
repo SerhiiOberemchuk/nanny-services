@@ -6,9 +6,9 @@ import { TYPE_MODAL } from "../../Constans/constans";
 import { useState } from "react";
 import icons from "../../assets/icons/iconsSprite.svg";
 import { modalWindowContent } from "./modalContent";
-import { userSignUp } from "../../redux/users/operation";
-import { collection, getDocs, setDoc } from "firebase/firestore";
-import { bdFirestore } from "../../Api/firebaseConfig";
+import { userLogIn, userSignUp } from "../../redux/users/operation";
+import { closeModalLoginRegistration } from "../../redux/users/usersSlice";
+import { auth } from "../../Api/firebaseConfig";
 
 function FormInput() {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -20,18 +20,16 @@ function FormInput() {
   }
   const iconShowPassword = isPasswordVisible ? "#icon-eye" : "#icon-eyeOff";
 
-  const usersss = async () => {
-    try {
-      const data = await getDocs(collection(bdFirestore, "users"));
-      const basedata = data.docs.map((docs) => ({
-        ...docs.data(),
-      }));
-      console.log(basedata);
-      return data;
-    } catch (err) {
-      console.log(err);
+  function handleSubmit(values) {
+    if (modalType === TYPE_MODAL.registration) {
+      dispatch(userSignUp(values));
     }
-  };
+    if (modalType === TYPE_MODAL.login) {
+      dispatch(userLogIn(values));
+      console.log(auth.currentUser);
+    }
+  }
+
   return (
     <Formik
       initialValues={{
@@ -43,12 +41,9 @@ function FormInput() {
         modalType === TYPE_MODAL.registration ? SignupSchema : LoginSchema
       }
       onSubmit={(values) => {
-        // dispatch(userSignUp(values));
-        // setDoc(collection(bdFirestore, "users"), {
-        //   name: "serhii",
-        //   email: "w@w.we",
-        //   uid: "dfdsfdsfdsfef3453242353",
-        // });
+        handleSubmit(values);
+
+        dispatch(closeModalLoginRegistration());
       }}
     >
       {({ errors, touched }) => (
@@ -101,11 +96,7 @@ function FormInput() {
               </svg>
             </button>
           </div>
-          <button
-            type="submit"
-            className={style.buttonSubmit}
-            onClick={usersss}
-          >
+          <button type="submit" className={style.buttonSubmit}>
             {modalType === TYPE_MODAL.login &&
               modalWindowContent.titleButtonLogin}
             {modalType === TYPE_MODAL.registration &&

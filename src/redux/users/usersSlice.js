@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { initialState } from "./initialState";
-import { userSignUp } from "./operation";
+import { userLogIn, userSignOut, userSignUp } from "./operation";
 
 export const usersSlice = createSlice({
   name: "users",
@@ -18,16 +18,46 @@ export const usersSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(userSignUp.pending, (state) => {
-      state.loading = true;
-      state.error = false;
-    });
-    builder.addCase(userSignUp.fulfilled, (state, action) => {
-      state.loading = false;
-    });
-    builder.addCase(userSignUp.rejected, (state, action) => {
-      state.loading = false;
-    });
+    builder
+      .addCase(userSignUp.pending, (state) => {
+        state.loading = true;
+        state.error = false;
+      })
+      .addCase(userSignUp.fulfilled, (state, action) => {
+        state.loading = false;
+        state.isLoggedIn = true;
+        state.userName = action.payload.name;
+        state.userEmail = action.payload.email;
+      })
+      .addCase(userSignUp.rejected, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(userLogIn.pending, (state) => {
+        state.loading = true;
+        state.error = false;
+      })
+      .addCase(userLogIn.fulfilled, (state, action) => {
+        state.loading = false;
+        state.isLoggedIn = true;
+        state.userName = action.payload.name;
+        state.userEmail = action.payload.email;
+      })
+      .addCase(userLogIn.rejected, (state) => {
+        state.loading = false;
+        state.error = true;
+      })
+      .addCase(userSignOut.pending, (state) => {
+        state.loading = true;
+        state.error = false;
+      })
+      .addCase(userSignOut.fulfilled, (state) => {
+        state.loading = false;
+        state.isLoggedIn = false;
+      })
+      .addCase(userSignOut.rejected, (state) => {
+        state.loading = false;
+        state.error = true;
+      });
   },
 });
 

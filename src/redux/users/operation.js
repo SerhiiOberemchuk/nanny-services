@@ -2,9 +2,11 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signOut,
+  updateProfile,
 } from "firebase/auth";
 import { auth, bdFirestore } from "../../Api/firebaseConfig";
-import { doc, setDoc } from "firebase/firestore";
+import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 
 export const userSignUp = createAsyncThunk(
   "user/signUp",
@@ -15,17 +17,13 @@ export const userSignUp = createAsyncThunk(
         email,
         password
       );
+
       const user = response.user;
+      await updateProfile(user, { displayName: name });
       console.log(user);
-
-      await setDoc(doc(bdFirestore, "users", user.uid), {
-        uid: user.uid,
-        email: user.email,
-        name,
-      });
-
       return { email: user.email, name };
     } catch (error) {
+      console.log(error.message);
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -33,14 +31,27 @@ export const userSignUp = createAsyncThunk(
 
 export const userLogIn = createAsyncThunk(
   "user/logIn",
-  async (user, thunkAPI) => {
+  async (userData, thunkAPI) => {
     try {
-      const currentUser = await signInWithEmailAndPassword(
+      const { user } = await signInWithEmailAndPassword(
         auth,
-        user.email,
-        user.password
+        userData.email,
+        userData.password
       );
-      return { name: currentUser.name, email: currentUser.email };
+      console.log(user);
+      return { email: user.email, name: user.displayName };
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const userSignOut = createAsyncThunk(
+  "user/signOut",
+  async (_, thunkAPI) => {
+    try {
+      const userLogout = await signOut(auth);
+      return userLogout;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }

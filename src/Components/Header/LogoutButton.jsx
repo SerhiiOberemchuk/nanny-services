@@ -1,7 +1,11 @@
 import style from "./Header.module.css";
 import icons from "../../assets/icons/iconsSprite.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { userSignOut } from "../../redux/users/operation";
 
 function LogoutButton() {
+  const { userName } = useSelector((state) => state.users);
+  const dispatch = useDispatch();
   return (
     <div className={style.listLogout}>
       <div className={style.userName}>
@@ -10,9 +14,13 @@ function LogoutButton() {
             <use href={`${icons}#icon-user`}></use>
           </svg>
         </div>
-        <span>Name</span>
+        <span>{userName}</span>
       </div>
-      <button type="button" className={style.logoutButton}>
+      <button
+        type="button"
+        className={style.logoutButton}
+        onClick={() => dispatch(userSignOut())}
+      >
         Log out
       </button>
     </div>
