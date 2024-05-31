@@ -2,9 +2,9 @@ import style from "./Header.module.css";
 import icons from "../../assets/icons/iconsSprite.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { userSignOut } from "../../redux/users/operation";
+import { auth } from "../../Api/firebaseConfig";
 
 function LogoutButton() {
-  const { userName } = useSelector((state) => state.users);
   const dispatch = useDispatch();
   return (
     <div className={style.listLogout}>
@@ -14,7 +14,7 @@ function LogoutButton() {
             <use href={`${icons}#icon-user`}></use>
           </svg>
         </div>
-        <span>{userName}</span>
+        <span>{auth.currentUser.displayName}</span>
       </div>
       <button
         type="button"

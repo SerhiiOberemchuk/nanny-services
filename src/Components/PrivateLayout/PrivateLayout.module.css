@@ -23,3 +23,8 @@
     display: flex;
     height: 32px;
 }
+
+.main {
+    color: var(--text-color-black);
+    padding-top: 94px;
+}

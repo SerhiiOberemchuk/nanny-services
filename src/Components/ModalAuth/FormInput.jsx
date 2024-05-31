@@ -8,7 +8,6 @@ import icons from "../../assets/icons/iconsSprite.svg";
 import { modalWindowContent } from "./modalContent";
 import { userLogIn, userSignUp } from "../../redux/users/operation";
 import { closeModalLoginRegistration } from "../../redux/users/usersSlice";
-import { auth } from "../../Api/firebaseConfig";
 
 function FormInput() {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -26,7 +25,6 @@ function FormInput() {
     }
     if (modalType === TYPE_MODAL.login) {
       dispatch(userLogIn(values));
-      console.log(auth.currentUser);
     }
   }
 
@@ -42,7 +40,6 @@ function FormInput() {
       }
       onSubmit={(values) => {
         handleSubmit(values);
-
         dispatch(closeModalLoginRegistration());
       }}
     >

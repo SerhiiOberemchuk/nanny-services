@@ -7,7 +7,6 @@ import {
   setTypeOfModalLoginRegistration,
 } from "../../redux/users/usersSlice";
 import { TYPE_MODAL } from "../../Constans/constans";
-import ModalAuth from "../ModalAuth/ModalAuth";
 
 function HomePageContent() {
   const dispatch = useDispatch();
@@ -15,6 +14,7 @@ function HomePageContent() {
     dispatch(setTypeOfModalLoginRegistration(TYPE_MODAL.registration));
     dispatch(openModalLoginRegistration());
   }
+
   return (
     <section className={style.homePage}>
       <header className={style.header}>
@@ -47,7 +47,6 @@ function HomePageContent() {
           </div>
         </div>
       </section>
-      <ModalAuth />
     </section>
   );
 }

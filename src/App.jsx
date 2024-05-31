@@ -14,22 +14,10 @@ function App() {
     <>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route
-            index
-            element={
-              // <PublicRoute> </PublicRoute>
-              <HomePage />
-            }
-          />
+          <Route index element={<HomePage />} />
         </Route>
         <Route path="/" element={<PrivateLayout />}>
-          <Route
-            path="/nannies"
-            element={
-              // <PrivateRoute> </PrivateRoute>
-              <NanniesPage />
-            }
-          />
+          <Route path="/nannies" element={<NanniesPage />} />
           <Route
             path="/favorites"
             element={

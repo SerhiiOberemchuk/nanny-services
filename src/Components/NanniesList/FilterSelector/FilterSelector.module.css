@@ -1,0 +1,18 @@
+.selector {
+    margin-top: 64px;
+}
+
+.title {
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 129%;
+    color: #8a8a89;
+    margin-bottom: 8px;
+}
+
+.select {
+    border-radius: 14px;
+    padding: 16px 18px 16px 18px;
+
+}

@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { initialState } from "./initialState";
 import { userLogIn, userSignOut, userSignUp } from "./operation";
 
-export const usersSlice = createSlice({
+const usersSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
@@ -26,8 +26,6 @@ export const usersSlice = createSlice({
       .addCase(userSignUp.fulfilled, (state, action) => {
         state.loading = false;
         state.isLoggedIn = true;
-        state.userName = action.payload.name;
-        state.userEmail = action.payload.email;
       })
       .addCase(userSignUp.rejected, (state, action) => {
         state.loading = false;
@@ -39,8 +37,6 @@ export const usersSlice = createSlice({
       .addCase(userLogIn.fulfilled, (state, action) => {
         state.loading = false;
         state.isLoggedIn = true;
-        state.userName = action.payload.name;
-        state.userEmail = action.payload.email;
       })
       .addCase(userLogIn.rejected, (state) => {
         state.loading = false;

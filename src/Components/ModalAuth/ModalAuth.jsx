@@ -36,35 +36,33 @@ function ModalAuth() {
   }
 
   return (
-    <div>
-      <Modal
-        isOpen={isModalLoginRegistration}
-        style={customStyles}
-        onRequestClose={handleCloseModal}
-        shouldCloseOnEsc={true}
-        shouldCloseOnOverlayClick={true}
-      >
-        <section className={style.modalFormSection}>
-          <button onClick={handleCloseModal} className={style.closeButton}>
-            <svg className={style.iconSvg}>
-              <use href={`${icons}#icon-iconX`}></use>
-            </svg>
-          </button>
-          <h2 className={style.titleModal}>
-            {modalType === TYPE_MODAL.login && modalWindowContent.titleLogin}
-            {modalType === TYPE_MODAL.registration &&
-              modalWindowContent.titleRegistration}
-          </h2>
-          <p className={style.modalDescription}>
-            {modalType === TYPE_MODAL.login &&
-              modalWindowContent.descriptionLogin}
-            {modalType === TYPE_MODAL.registration &&
-              modalWindowContent.descriptionRegistration}
-          </p>
-          <FormInput />
-        </section>
-      </Modal>
-    </div>
+    <Modal
+      isOpen={isModalLoginRegistration}
+      style={customStyles}
+      onRequestClose={handleCloseModal}
+      shouldCloseOnEsc={true}
+      shouldCloseOnOverlayClick={true}
+    >
+      <section className={style.modalFormSection}>
+        <button onClick={handleCloseModal} className={style.closeButton}>
+          <svg className={style.iconSvg}>
+            <use href={`${icons}#icon-iconX`}></use>
+          </svg>
+        </button>
+        <h2 className={style.titleModal}>
+          {modalType === TYPE_MODAL.login && modalWindowContent.titleLogin}
+          {modalType === TYPE_MODAL.registration &&
+            modalWindowContent.titleRegistration}
+        </h2>
+        <p className={style.modalDescription}>
+          {modalType === TYPE_MODAL.login &&
+            modalWindowContent.descriptionLogin}
+          {modalType === TYPE_MODAL.registration &&
+            modalWindowContent.descriptionRegistration}
+        </p>
+        <FormInput />
+      </section>
+    </Modal>
   );
 }
 
