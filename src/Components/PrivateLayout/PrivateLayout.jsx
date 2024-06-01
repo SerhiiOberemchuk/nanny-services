@@ -21,10 +21,12 @@ function PrivateLayout() {
         </Container>
       </header>
 
-      <main className={style.main}>
-        <Suspense fallback={<div>Loading...</div>}>
-          <Outlet />
-        </Suspense>
+      <main>
+        <section className={style.main}>
+          <Suspense fallback={<div>Loading...</div>}>
+            <Outlet />
+          </Suspense>
+        </section>
       </main>
       {(isLoadingNannies || isLoadingUsers) && <LoadingSpiner />}
     </>
