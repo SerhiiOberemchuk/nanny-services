@@ -83,7 +83,9 @@ function ListSection() {
               <li className={style.charactersNanny}>
                 <span>Characters:</span>{" "}
                 <span className={style.charactersValue}>
-                  {nanny.characters}
+                  {nanny.characters
+                    .map((item) => item.charAt(0).toUpperCase() + item.slice(1))
+                    .join(", ")}
                 </span>
               </li>
               <li className={style.charactersNanny}>
