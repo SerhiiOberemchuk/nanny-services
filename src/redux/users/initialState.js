@@ -4,6 +4,6 @@ export const initialState = {
   isLoggedIn: false,
   loading: false,
   error: false,
-  userName: "",
   userEmail: "",
+  userName: "",
 };

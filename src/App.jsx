@@ -2,7 +2,6 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import Layout from "./Components/Layout/Layout";
 import { lazy } from "react";
 import PrivateRoute from "./Components/PrivateRoute/PrivateRoute.jsx";
-import PublicRoute from "./Components/PublicRoute/PublicRoute.jsx";
 import PrivateLayout from "./Components/PrivateLayout/PrivateLayout.jsx";
 
 const HomePage = lazy(() => import("./Pages/HomePage.jsx"));
@@ -21,8 +20,9 @@ function App() {
           <Route
             path="/favorites"
             element={
-              // <PrivateRoute></PrivateRoute>
-              <FavoritesPage />
+              <PrivateRoute>
+                <FavoritesPage />
+              </PrivateRoute>
             }
           />
         </Route>

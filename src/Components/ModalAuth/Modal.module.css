@@ -109,5 +109,13 @@
 }
 
 .errorsSchema {
+    font-size: 14px;
     color: var(--primary-color);
+    position: absolute;
+    top: -15px;
+    left: 20px;
+    border: 1px solid rgba(17, 16, 28, 0.1);
+    border-radius: 5px;
+    padding: 1px 3px;
+    background-color: var(--text-color-white);
 }

@@ -1,8 +1,10 @@
-import { Field, Form, Formik } from "formik";
-import style from "./FormModalAppointment.module.css";
+import React from "react";
+import { Form, Formik } from "formik";
 import { appointmentSchema } from "./appointmentSchema";
+import style from "./FormModalAppointment.module.css";
+import InputField from "./InputField";
 
-function FormModalAppointment() {
+const FormModalAppointment = () => {
   return (
     <Formik
       initialValues={{
@@ -17,99 +19,54 @@ function FormModalAppointment() {
       onSubmit={(values) => console.log(values)}
       validationSchema={appointmentSchema}
     >
-      {({ errors, touched }) => (
+      {() => (
         <Form className={style.form}>
           <div className={style.blockField}>
-            <div className={style.positionInput}>
-              <label
-                htmlFor="address"
-                style={{ position: "absolute", left: "-9999px" }}
-              ></label>
-              <Field
-                type="text"
-                id="address"
-                name="address"
-                placeholder="Address"
-                aria-label="Address"
-                className={style.field}
-              />
-              {errors.address && touched.address ? (
-                <div className={style.errorsSchema}>{errors.address}</div>
-              ) : null}
-            </div>
-            <label
-              htmlFor="numberPhone"
-              style={{ position: "absolute", left: "-9999px" }}
-            ></label>
-            <Field
-              type="text"
+            <InputField
+              id="address"
+              name="address"
+              placeholder="Address"
+              ariaLabel="Address"
+            />
+            <InputField
               id="numberPhone"
               name="numberPhone"
               placeholder="+380"
-              aria-label="number phone"
-              className={style.field}
+              ariaLabel="number phone"
             />
-            <label
-              htmlFor="age"
-              style={{ position: "absolute", left: "-9999px" }}
-            ></label>
-            <Field
-              type="text"
+            <InputField
               id="age"
               name="age"
               placeholder="Child's age"
-              aria-label="Child's age"
-              className={style.field}
+              ariaLabel="Child's age"
             />
-            <label
-              htmlFor="time"
-              style={{ position: "absolute", left: "-9999px" }}
-            ></label>
-            <Field
-              type="time"
+            <InputField
               id="time"
               name="time"
+              type="time"
               placeholder="00:00"
-              aria-label="time"
-              className={style.field}
+              ariaLabel="time"
             />
           </div>
-
-          <label
-            htmlFor="email"
-            style={{ position: "absolute", left: "-9999px" }}
-          ></label>
-          <Field
-            type="email"
+          <InputField
             id="email"
             name="email"
+            type="email"
             placeholder="Email"
-            aria-label="Email"
-            className={style.field}
+            ariaLabel="Email"
           />
-          <label
-            htmlFor="fatherName"
-            style={{ position: "absolute", left: "-9999px" }}
-          ></label>
-          <Field
-            type="text"
+          <InputField
             id="fatherName"
             name="fatherName"
             placeholder="Father's or mother's name"
-            aria-label="Father's or mother's name"
-            className={style.field}
+            ariaLabel="Father's or mother's name"
           />
-          <label
-            htmlFor="comment"
-            style={{ position: "absolute", left: "-9999px" }}
-          ></label>
-          <Field
-            as="textarea"
+          <InputField
             id="comment"
             name="comment"
             placeholder="Comment"
-            aria-label="Comment"
-            className={style.textarea}
+            ariaLabel="Comment"
+            as="textarea"
           />
           <button type="submit" className={style.buttonSubmit}>
             Submit
@@ -118,6 +75,6 @@ function FormModalAppointment() {
       )}
     </Formik>
   );
-}
+};
 
 export default FormModalAppointment;

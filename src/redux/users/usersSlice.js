@@ -26,6 +26,7 @@ const usersSlice = createSlice({
       .addCase(userSignUp.fulfilled, (state, action) => {
         state.loading = false;
         state.isLoggedIn = true;
+        
       })
       .addCase(userSignUp.rejected, (state, action) => {
         state.loading = false;

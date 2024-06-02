@@ -1,6 +1,8 @@
 import { NavLink } from "react-router-dom";
 import style from "./Header.module.css";
-function NavigationList({ isFavorite = false }) {
+import { useSelector } from "react-redux";
+function NavigationList() {
+  const { isLoggedIn } = useSelector((state) => state.users);
   return (
     <ul className={style.navigationList}>
       <NavLink to={"/"} className={style.navLink}>
@@ -14,16 +16,6 @@ function NavigationList({ isFavorite = false }) {
       >
         Nannies
       </NavLink>
-      {isFavorite && (
-        <NavLink
-          to={"/favorites"}
-          className={({ isActive }) =>
-            `${style.navLink} ${isActive ? style.active : ""}`
-          }
-        >
-          Favorites
-        </NavLink>
-      )}
     </ul>
   );
 }
