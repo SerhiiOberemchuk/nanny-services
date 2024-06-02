@@ -1,0 +1,66 @@
+.madalContent {
+    /* position: relative; */
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.25;
+    color: var(--text-color-black);
+    max-width: 472px;
+}
+
+.title {
+
+    font-weight: 500;
+    font-size: 40px;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+}
+
+.description {
+    margin-top: 20px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 125%;
+    color: rgba(17, 16, 28, 0.5);
+}
+
+.nameAvatar {
+    margin-top: 40px;
+    display: flex;
+    gap: 14px;
+    margin-bottom: 40px;
+}
+
+.avatar {
+    max-width: 44px;
+    border-radius: 15px;
+}
+
+.youNanny {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 133%;
+    color: #8a8a89;
+}
+
+.nannyName {
+    margin-top: 4px;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.5
+}
+
+.iconSvg {
+    stroke: var(--text-color-black);
+    height: 32px;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 32px;
+    transition: transform 0.3s ease-in-out, stroke 0.3s ease-in-out
+}
+
+.iconSvg:hover {
+    transform: scale(1.1);
+    stroke: var(--primary-color);
+}

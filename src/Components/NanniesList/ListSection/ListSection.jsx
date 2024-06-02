@@ -1,23 +1,28 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import style from "./ListSection.module.css";
 import { selectorNanniesArrey } from "../../../redux/nannies/selectors";
 import { getNannies } from "../../../redux/nannies/operation";
 import icons from "../../../assets/icons/iconsSprite.svg";
-import { differenceInYears, parseISO } from "date-fns";
-
-const currentData = new Date();
+import ListReviews from "../ListReviews/ListReviews";
+import ListCharacters from "../ListCharacters/ListCharacters";
 
 function ListSection() {
-  const arrey = useSelector(selectorNanniesArrey);
+  const [isReview, setIsReview] = useState([]);
+  const nanniesCatalog = useSelector(selectorNanniesArrey);
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getNannies());
   }, [dispatch]);
 
+  const handleButtonReview = (e) => {
+    setIsReview((prev) => [...prev, e.target.id]);
+  };
+
   return (
     <ul className={style.list}>
-      {arrey.map((nanny) => (
+      {nanniesCatalog.map((nanny) => (
         <li key={nanny.id} className={style.listItem}>
           <div className={style.imgSection}>
             <img
@@ -63,40 +68,21 @@ function ListSection() {
                 </button>
               </div>
             </div>
-            <ul className={style.listCharacters}>
-              <li className={style.charactersNanny}>
-                <span>Age:</span>{" "}
-                <span className={style.charactersValueAge}>
-                  {differenceInYears(currentData, parseISO(nanny.birthday))}
-                </span>
-              </li>
-              <li className={style.charactersNanny}>
-                <span>Experience:</span>{" "}
-                <span className={style.charactersValue}>
-                  {nanny.experience}
-                </span>
-              </li>
-              <li className={style.charactersNanny}>
-                <span>Kids Age:</span>{" "}
-                <span className={style.charactersValue}>{nanny.kids_age}</span>
-              </li>
-              <li className={style.charactersNanny}>
-                <span>Characters:</span>{" "}
-                <span className={style.charactersValue}>
-                  {nanny.characters
-                    .map((item) => item.charAt(0).toUpperCase() + item.slice(1))
-                    .join(", ")}
-                </span>
-              </li>
-              <li className={style.charactersNanny}>
-                <span>Education:</span>{" "}
-                <span className={style.charactersValue}>{nanny.education}</span>
-              </li>
-            </ul>
+            <ListCharacters nanny={nanny} />
             <p className={style.about}>{nanny.about}</p>
-            <button type="button" className={style.buttonReadMore}>
-              Read more
-            </button>
+            {!isReview.includes(nanny.id) ? (
+              <button
+                type="button"
+                id={nanny.id}
+                className={style.buttonReadMore}
+                onClick={handleButtonReview}
+                aria-label="show reviews"
+              >
+                Read more
+              </button>
+            ) : (
+              <ListReviews nanny={nanny} />
+            )}
           </div>
         </li>
       ))}

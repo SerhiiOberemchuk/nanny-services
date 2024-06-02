@@ -1,0 +1,56 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.positionInput {
+    position: relative;
+}
+
+.errorsSchema {
+    background-color: var(--text-color-white);
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    color: var(--primary-color);
+}
+
+.field,
+.textarea {
+    padding: 16px 18px;
+    border: 1px solid rgba(17, 16, 28, 0.1);
+    border-radius: 12px;
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.25;
+    color: var(--text-color-black);
+    width: 100%;
+}
+
+.field::placeholder,
+.textarea::placeholder {
+    color: var(--text-color-black);
+}
+
+.textarea {
+    resize: none;
+}
+
+.buttonSubmit {
+    margin-top: 24px;
+    border-radius: 30px;
+    padding: 16px;
+    transition: transform 0.3s ease-in-out
+}
+
+.buttonSubmit:hover {
+    transform: scale(1.05);
+}
+
+.blockField {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 8px;
+}

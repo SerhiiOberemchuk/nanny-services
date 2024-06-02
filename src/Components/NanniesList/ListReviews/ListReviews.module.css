@@ -1,0 +1,75 @@
+.reviewsList {
+    margin-top: 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.itemReviews {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.reviewerName {
+
+    margin-bottom: 4px;
+}
+
+.reviewerLeter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 44px;
+    height: 44px;
+    background: rgba(240, 63, 59, 0.2);
+    border-radius: 50%;
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 100%;
+    color: #f03f3b;
+}
+
+.reviewerTitle {
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 125%;
+    color: var(--text-color-black);
+    display: flex;
+    gap: 12px;
+}
+
+.reviewValueBox {
+    display: flex;
+    align-items: center;
+
+}
+
+.reviewValue {
+    font-size: 14px;
+    line-height: 1.3;
+}
+
+.iconSvgStar {
+    fill: gold;
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+}
+
+.buttonAppointment {
+    border-radius: 30px;
+    padding: 14px 28px;
+    max-width: 100%;
+    font-size: 16px;
+    line-height: 125%;
+    letter-spacing: -0.01em;
+    margin-right: auto;
+    transition: transform 0.3s ease-in-out;
+}
+
+.buttonAppointment:hover {
+    transform: scale(1.05);
+}

@@ -20,6 +20,11 @@ const customStyles = {
     borderRadius: "30px",
     padding: "64px",
     maxWidth: "565px",
+    zIndex: 1001,
+  },
+  overlay: {
+    backgroundColor: "rgba(0, 0, 0, 0.75)",
+    zIndex: 1000,
   },
 };
 

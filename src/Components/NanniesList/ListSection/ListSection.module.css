@@ -71,29 +71,6 @@
     color: #11101c;
 }
 
-.listCharacters {
-    display: flex;
-    flex-wrap: wrap;
-    row-gap: 8px;
-    column-gap: 8px;
-    margin-top: 24px;
-    margin-bottom: 24px;
-}
-
-.charactersNanny {
-    border-radius: 24px;
-    padding: 8px 16px;
-    background-color: #f3f3f3;
-}
-
-.charactersValue {
-    color: #11101c;
-}
-
-.charactersValueAge {
-    color: #11101c;
-    text-decoration: underline;
-}
 
 
 .about {
@@ -112,8 +89,13 @@
     line-height: 150%;
     text-decoration: underline;
     text-decoration-skip-ink: none;
-    color: #11101c;
+    color: var(--text-color-black);
     background-color: transparent;
+    transition: color 0.3s ease-in-out;
+}
+
+.buttonReadMore:hover {
+    color: var(--primary-color);
 }
 
 .iconSvg {

@@ -1,0 +1,23 @@
+.listCharacters {
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 8px;
+    column-gap: 8px;
+    margin-top: 24px;
+    margin-bottom: 24px;
+}
+
+.charactersNanny {
+    border-radius: 24px;
+    padding: 8px 16px;
+    background-color: #f3f3f3;
+}
+
+.charactersValue {
+    color: #11101c;
+}
+
+.charactersValueAge {
+    color: #11101c;
+    text-decoration: underline;
+}
