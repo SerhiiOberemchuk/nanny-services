@@ -5,7 +5,15 @@ import { getNannies } from "./operation";
 export const nanniesSlice = createSlice({
   name: "nannies",
   initialState: initialStateNannies,
-  reducers: {},
+  reducers: {
+    addDellFavorites: (state, { payload }) => {
+      state.favoritesNannies.some((item) => item.id === payload.id)
+        ? (state.favoritesNannies = state.favoritesNannies.filter(
+            (item) => item.id !== payload.id
+          ))
+        : state.favoritesNannies.push(payload);
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getNannies.pending, (state, action) => {
@@ -13,7 +21,13 @@ export const nanniesSlice = createSlice({
       })
       .addCase(getNannies.fulfilled, (state, action) => {
         state.loading = false;
-        state.nanniesArray = [...state.favoritesNannies, ...action.payload];
+        const newNannies = action.payload.filter(
+          (item) =>
+            !state.nanniesArray.some(
+              (existingItem) => existingItem.id === item.id
+            )
+        );
+        state.nanniesArray = [...state.nanniesArray, ...newNannies];
       })
       .addCase(getNannies.rejected, (state, action) => {
         state.loading = false;
@@ -21,6 +35,6 @@ export const nanniesSlice = createSlice({
   },
 });
 
-export const { fgff } = nanniesSlice.actions;
+export const { addDellFavorites } = nanniesSlice.actions;
 
 export default nanniesSlice.reducer;

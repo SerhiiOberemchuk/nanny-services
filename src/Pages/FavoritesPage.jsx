@@ -1,5 +1,7 @@
+import CatalogFavoritesNannies from "../Components/CatalogFavoritesNannies/CatalogFavoritesNannies";
+
 function Favorites() {
-  return <div>Favorites</div>;
+  return <CatalogFavoritesNannies />;
 }
 
 export default Favorites;

@@ -1,20 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import style from "./ListSection.module.css";
-import { selectorNanniesArrey } from "../../../redux/nannies/selectors";
-import { getNannies } from "../../../redux/nannies/operation";
+import { selectorFavoritesNannies } from "../../../redux/nannies/selectors";
 import icons from "../../../assets/icons/iconsSprite.svg";
 import ListReviews from "../ListReviews/ListReviews";
 import ListCharacters from "../ListCharacters/ListCharacters";
+import { addDellFavorites } from "../../../redux/nannies/nanniesSlice";
+import { selectorIsLoggedIn } from "../../../redux/users/selectors";
+import { toast } from "react-toastify";
 
-function ListSection() {
+function ListSection({ nanniesCatalog }) {
   const [isReview, setIsReview] = useState([]);
-  const nanniesCatalog = useSelector(selectorNanniesArrey);
+  const favorites = useSelector(selectorFavoritesNannies);
+  const isLoggined = useSelector(selectorIsLoggedIn);
 
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getNannies());
-  }, [dispatch]);
+
+  const handleFavoriteButton = (data) => {
+    if (!isLoggined) {
+      toast.warn("Please log in to continue.");
+      return;
+    }
+    dispatch(addDellFavorites(data));
+  };
 
   const handleButtonReview = (e) => {
     setIsReview((prev) => [...prev, e.target.id]);
@@ -61,8 +69,18 @@ function ListSection() {
                     </span>
                   </span>
                 </div>
-                <button type="button" className={style.buttonFavorite}>
-                  <svg className={style.iconSvgFavorite}>
+                <button
+                  type="button"
+                  className={style.buttonFavorite}
+                  onClick={() => handleFavoriteButton(nanny)}
+                >
+                  <svg
+                    className={`${style.iconSvgFavorite} ${
+                      favorites.some((item) => item.id === nanny.id)
+                        ? style.isFavorite
+                        : ""
+                    }`}
+                  >
                     <use href={`${icons}#icon-heart`}></use>
                   </svg>
                 </button>
