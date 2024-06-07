@@ -8,11 +8,13 @@ import ListCharacters from "../ListCharacters/ListCharacters";
 import { addDellFavorites } from "../../../redux/nannies/nanniesSlice";
 import { selectorIsLoggedIn } from "../../../redux/users/selectors";
 import { toast } from "react-toastify";
+import { addFavorit } from "../../../redux/nannies/operation";
 
 function ListSection({ nanniesCatalog }) {
   const [isReview, setIsReview] = useState([]);
   const favorites = useSelector(selectorFavoritesNannies);
   const isLoggined = useSelector(selectorIsLoggedIn);
+  const { userId } = useSelector((state) => state.users);
 
   const dispatch = useDispatch();
 
@@ -21,13 +23,14 @@ function ListSection({ nanniesCatalog }) {
       toast.warn("Please log in to continue.");
       return;
     }
-    dispatch(addDellFavorites(data));
+    // dispatch(addDellFavorites(data));
+    dispatch(addFavorit(data));
   };
 
   const handleButtonReview = (e) => {
     setIsReview((prev) => [...prev, e.target.id]);
   };
-
+  console.log(nanniesCatalog);
   return (
     <ul className={style.list}>
       {nanniesCatalog.map((nanny) => (
@@ -72,7 +75,7 @@ function ListSection({ nanniesCatalog }) {
                 <button
                   type="button"
                   className={style.buttonFavorite}
-                  onClick={() => handleFavoriteButton(nanny)}
+                  onClick={() => handleFavoriteButton({ userId, nanny })}
                 >
                   <svg
                     className={`${style.iconSvgFavorite} ${

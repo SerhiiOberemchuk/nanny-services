@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { initialStateNannies } from "./initialState";
-import { getNannies } from "./operation";
+import { addFavorit, dellFavorit, getNannies } from "./operation";
 
 export const nanniesSlice = createSlice({
   name: "nannies",
@@ -30,6 +30,24 @@ export const nanniesSlice = createSlice({
         state.nanniesArray = [...state.nanniesArray, ...newNannies];
       })
       .addCase(getNannies.rejected, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(addFavorit.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(addFavorit.fulfilled, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(addFavorit.rejected, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(dellFavorit.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(dellFavorit.fulfilled, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(dellFavorit.rejected, (state, action) => {
         state.loading = false;
       });
   },

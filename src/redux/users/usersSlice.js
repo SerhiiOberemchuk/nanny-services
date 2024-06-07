@@ -22,26 +22,44 @@ const usersSlice = createSlice({
       .addCase(userSignUp.pending, (state) => {
         state.loading = true;
         state.error = false;
+        state.userId = "";
+        state.userName = "";
+        state.userEmail = "";
       })
       .addCase(userSignUp.fulfilled, (state, action) => {
         state.loading = false;
         state.isLoggedIn = true;
-        
+        state.userId = action.payload.userId;
+        state.userName = action.payload.name;
+        state.userEmail = action.payload.email;
       })
       .addCase(userSignUp.rejected, (state, action) => {
         state.loading = false;
+        state.error = action.error;
+        state.userId = "";
+        state.userName = "";
+        state.userEmail = "";
       })
       .addCase(userLogIn.pending, (state) => {
         state.loading = true;
         state.error = false;
+        state.userId = "";
+        state.userName = "";
+        state.userEmail = "";
       })
       .addCase(userLogIn.fulfilled, (state, action) => {
         state.loading = false;
         state.isLoggedIn = true;
+        state.userId = action.payload.userId;
+        state.userName = action.payload.name;
+        state.userEmail = action.payload.email;
       })
       .addCase(userLogIn.rejected, (state) => {
         state.loading = false;
         state.error = true;
+        state.userId = "";
+        state.userName = "";
+        state.userEmail = "";
       })
       .addCase(userSignOut.pending, (state) => {
         state.loading = true;
@@ -50,6 +68,8 @@ const usersSlice = createSlice({
       .addCase(userSignOut.fulfilled, (state) => {
         state.loading = false;
         state.isLoggedIn = false;
+        state.userId = "";
+        state.userName = "";
       })
       .addCase(userSignOut.rejected, (state) => {
         state.loading = false;

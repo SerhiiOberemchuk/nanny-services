@@ -5,8 +5,9 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
-import { auth } from "../../Api/firebaseConfig";
+import { auth, dbFirestore } from "../../Api/firebaseConfig";
 import { Bounce, toast } from "react-toastify";
+import { doc, setDoc } from "firebase/firestore";
 
 export const userSignUp = createAsyncThunk(
   "user/signUp",
@@ -20,8 +21,12 @@ export const userSignUp = createAsyncThunk(
 
       const user = response.user;
       await updateProfile(user, { displayName: name });
+      await setDoc(doc(dbFirestore, "users", user.uid), {
+        email: user.email,
+        name,
+      });
 
-      return { email: user.email, name };
+      return { email: user.email, name, userId: user.uid };
     } catch (error) {
       toast.warn(error.message);
       return thunkAPI.rejectWithValue(error.message);
@@ -33,8 +38,13 @@ export const userLogIn = createAsyncThunk(
   "user/logIn",
   async (userData, thunkAPI) => {
     try {
-      await signInWithEmailAndPassword(auth, userData.email, userData.password);
-      return;
+      const response = await signInWithEmailAndPassword(
+        auth,
+        userData.email,
+        userData.password
+      );
+      const user = response.user;
+      return { name: user.displayName, userId: user.uid, email: user.email };
     } catch (error) {
       toast.warn(error.message);
       return thunkAPI.rejectWithValue(error.message);
