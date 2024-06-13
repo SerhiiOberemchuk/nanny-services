@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import style from "./ListSection.module.css";
 import { selectorFavoritesNannies } from "../../../redux/nannies/selectors";
@@ -8,7 +8,7 @@ import ListCharacters from "../ListCharacters/ListCharacters";
 import { addDellFavorites } from "../../../redux/nannies/nanniesSlice";
 import { selectorIsLoggedIn } from "../../../redux/users/selectors";
 import { toast } from "react-toastify";
-import { addFavorit } from "../../../redux/nannies/operation";
+import { getFavorites, updateFavorit } from "../../../redux/nannies/operation";
 
 function ListSection({ nanniesCatalog }) {
   const [isReview, setIsReview] = useState([]);
@@ -18,19 +18,28 @@ function ListSection({ nanniesCatalog }) {
 
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    if (!userId) {
+      return;
+    }
+    dispatch(getFavorites(userId));
+  }, [dispatch, userId]);
+
+  useEffect(() => {
+    dispatch(updateFavorit({ userId, favorites }));
+  }, [dispatch, userId, favorites]);
+
   const handleFavoriteButton = (data) => {
     if (!isLoggined) {
       toast.warn("Please log in to continue.");
       return;
     }
-    // dispatch(addDellFavorites(data));
-    dispatch(addFavorit(data));
+    dispatch(addDellFavorites(data));
   };
 
   const handleButtonReview = (e) => {
     setIsReview((prev) => [...prev, e.target.id]);
   };
-  console.log(nanniesCatalog);
   return (
     <ul className={style.list}>
       {nanniesCatalog.map((nanny) => (

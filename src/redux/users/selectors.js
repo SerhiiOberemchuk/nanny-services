@@ -3,3 +3,4 @@ export const selectorIsModalLogin = (state) => state.users.isModalLogin;
 export const selectorIsModalRegistration = (state) =>
   state.users.isModalRegistration;
 export const selectorIsLoadingUsers = (state) => state.users.loading;
+export const selectorUserId = (state) => state.users.userId;

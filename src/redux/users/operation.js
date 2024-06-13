@@ -7,7 +7,7 @@ import {
 } from "firebase/auth";
 import { auth, dbFirestore } from "../../Api/firebaseConfig";
 import { Bounce, toast } from "react-toastify";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 
 export const userSignUp = createAsyncThunk(
   "user/signUp",
@@ -44,6 +44,9 @@ export const userLogIn = createAsyncThunk(
         userData.password
       );
       const user = response.user;
+      const docRef = doc(dbFirestore, "users", user.uid);
+      const docSnap = await getDoc(docRef);
+      console.log("object  :>> ", docSnap.data());
       return { name: user.displayName, userId: user.uid, email: user.email };
     } catch (error) {
       toast.warn(error.message);

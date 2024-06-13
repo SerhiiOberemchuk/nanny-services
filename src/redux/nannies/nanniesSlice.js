@@ -1,17 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { initialStateNannies } from "./initialState";
-import { addFavorit, dellFavorit, getNannies } from "./operation";
+import { getFavorites, getNannies, updateFavorit } from "./operation";
 
 export const nanniesSlice = createSlice({
   name: "nannies",
   initialState: initialStateNannies,
   reducers: {
     addDellFavorites: (state, { payload }) => {
-      state.favoritesNannies.some((item) => item.id === payload.id)
+      state.favoritesNannies.some((item) => item.id === payload.nanny.id)
         ? (state.favoritesNannies = state.favoritesNannies.filter(
-            (item) => item.id !== payload.id
+            (item) => item.id !== payload.nanny.id
           ))
-        : state.favoritesNannies.push(payload);
+        : state.favoritesNannies.push(payload.nanny);
     },
   },
   extraReducers: (builder) => {
@@ -19,35 +19,38 @@ export const nanniesSlice = createSlice({
       .addCase(getNannies.pending, (state, action) => {
         state.loading = true;
       })
-      .addCase(getNannies.fulfilled, (state, action) => {
+      .addCase(getNannies.fulfilled, (state, { payload }) => {
         state.loading = false;
-        const newNannies = action.payload.filter(
-          (item) =>
-            !state.nanniesArray.some(
-              (existingItem) => existingItem.id === item.id
-            )
-        );
-        state.nanniesArray = [...state.nanniesArray, ...newNannies];
+
+        state.nanniesArray = [
+          ...state.nanniesArray,
+          ...payload.filter(
+            (item) =>
+              !state.nanniesArray.some(
+                (existingItem) => existingItem.id === item.id
+              )
+          ),
+        ];
       })
       .addCase(getNannies.rejected, (state, action) => {
         state.loading = false;
       })
-      .addCase(addFavorit.pending, (state, action) => {
+      .addCase(updateFavorit.pending, (state, action) => {
         state.loading = true;
       })
-      .addCase(addFavorit.fulfilled, (state, action) => {
+      .addCase(updateFavorit.fulfilled, (state, action) => {
         state.loading = false;
       })
-      .addCase(addFavorit.rejected, (state, action) => {
+      .addCase(updateFavorit.rejected, (state, action) => {
         state.loading = false;
       })
-      .addCase(dellFavorit.pending, (state, action) => {
+      .addCase(getFavorites.pending, (state, action) => {
         state.loading = true;
       })
-      .addCase(dellFavorit.fulfilled, (state, action) => {
+      .addCase(getFavorites.fulfilled, (state, { payload }) => {
         state.loading = false;
       })
-      .addCase(dellFavorit.rejected, (state, action) => {
+      .addCase(getFavorites.rejected, (state, action) => {
         state.loading = false;
       });
   },
