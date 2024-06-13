@@ -1,0 +1,1 @@
+import{u as e,h as n,j as s,C as a}from"./index-CmRL8TsL.js";import{L as o}from"./ListSection-DJsLmv4d.js";function r(){const t=e(n);return s.jsx(a,{children:s.jsx(o,{nanniesCatalog:t})})}function c(){return s.jsx(r,{})}export{c as default};
