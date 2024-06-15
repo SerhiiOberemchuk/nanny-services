@@ -5,8 +5,12 @@ import { useDispatch } from "react-redux";
 import {
   openModalLoginRegistration,
   setTypeOfModalLoginRegistration,
+  setUserData,
 } from "../../redux/users/usersSlice";
 import { TYPE_MODAL } from "../../Constans/constans";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
+import { dbFirestore } from "../../Api/firebaseConfig";
 
 function HomePageContent() {
   const dispatch = useDispatch();
@@ -14,7 +18,23 @@ function HomePageContent() {
     dispatch(setTypeOfModalLoginRegistration(TYPE_MODAL.registration));
     dispatch(openModalLoginRegistration());
   }
-
+  const auth = getAuth();
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      const docRef = doc(dbFirestore, "users", user.uid);
+      const docSnap = await getDoc(docRef);
+      dispatch(
+        setUserData({
+          userId: user.uid,
+          userName: user.displayName,
+          userEmail: user.email,
+          favoritesNannies: docSnap.data()?.favoritesNannies || [],
+        })
+      );
+    } else {
+      console.log("User is signed out");
+    }
+  });
   return (
     <section className={style.homePage}>
       <header className={style.header}>

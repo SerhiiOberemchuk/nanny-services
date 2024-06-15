@@ -1,14 +1,26 @@
-import React, { useEffect, useState } from "react";
+import { useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import style from "./ListSection.module.css";
-import { selectorFavoritesNannies } from "../../../redux/nannies/selectors";
 import icons from "../../../assets/icons/iconsSprite.svg";
 import ListReviews from "../ListReviews/ListReviews";
 import ListCharacters from "../ListCharacters/ListCharacters";
-import { addDellFavorites } from "../../../redux/nannies/nanniesSlice";
-import { selectorIsLoggedIn } from "../../../redux/users/selectors";
+import {
+  selectorFavoritesNannies,
+  selectorIsLoggedIn,
+} from "../../../redux/users/selectors";
 import { toast } from "react-toastify";
-import { getFavorites, updateFavorit } from "../../../redux/nannies/operation";
+import { updateFavorit } from "../../../redux/users/operation";
+import { updateFavoritesState } from "../../../redux/users/usersSlice";
+
+const createFavoritesArray = (favoritesNannies, nanny) => {
+  const data = favoritesNannies.some((item) => item.id === nanny.id)
+    ? (favoritesNannies = favoritesNannies.filter(
+        (item) => item.id !== nanny.id
+      ))
+    : (favoritesNannies = [...favoritesNannies, nanny]);
+
+  return data;
+};
 
 function ListSection({ nanniesCatalog }) {
   const [isReview, setIsReview] = useState([]);
@@ -18,28 +30,20 @@ function ListSection({ nanniesCatalog }) {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (!userId) {
-      return;
-    }
-    dispatch(getFavorites(userId));
-  }, [dispatch, userId]);
-
-  useEffect(() => {
-    dispatch(updateFavorit({ userId, favorites }));
-  }, [dispatch, userId, favorites]);
-
-  const handleFavoriteButton = (data) => {
+  const handleFavoriteButton = (userId, nanny) => {
     if (!isLoggined) {
       toast.warn("Please log in to continue.");
       return;
     }
-    dispatch(addDellFavorites(data));
+    const favoritesArray = createFavoritesArray(favorites, nanny);
+    dispatch(updateFavorit({ userId, favoritesArray }));
+    dispatch(updateFavoritesState(favoritesArray));
   };
 
-  const handleButtonReview = (e) => {
+  const handleButtonReview = useCallback((e) => {
     setIsReview((prev) => [...prev, e.target.id]);
-  };
+  }, []);
+
   return (
     <ul className={style.list}>
       {nanniesCatalog.map((nanny) => (
@@ -84,7 +88,7 @@ function ListSection({ nanniesCatalog }) {
                 <button
                   type="button"
                   className={style.buttonFavorite}
-                  onClick={() => handleFavoriteButton({ userId, nanny })}
+                  onClick={() => handleFavoriteButton(userId, nanny)}
                 >
                   <svg
                     className={`${style.iconSvgFavorite} ${

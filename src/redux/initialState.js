@@ -7,4 +7,8 @@ export const initialState = {
   userId: "",
   userEmail: "",
   userName: "",
+  nanniesArray: [],
+  favoritesNannies: [],
+  accessToken: null,
+  refreshToken: null,
 };

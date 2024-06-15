@@ -7,7 +7,7 @@ import {
 } from "firebase/auth";
 import { auth, dbFirestore } from "../../Api/firebaseConfig";
 import { Bounce, toast } from "react-toastify";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, setDoc } from "firebase/firestore";
 
 export const userSignUp = createAsyncThunk(
   "user/signUp",
@@ -21,12 +21,14 @@ export const userSignUp = createAsyncThunk(
 
       const user = response.user;
       await updateProfile(user, { displayName: name });
-      await setDoc(doc(dbFirestore, "users", user.uid), {
+
+      return {
         email: user.email,
         name,
-      });
-
-      return { email: user.email, name, userId: user.uid };
+        userId: user.uid,
+        accessToken: user.accessToken,
+        refreshToken: user.refreshToken,
+      };
     } catch (error) {
       toast.warn(error.message);
       return thunkAPI.rejectWithValue(error.message);
@@ -46,8 +48,15 @@ export const userLogIn = createAsyncThunk(
       const user = response.user;
       const docRef = doc(dbFirestore, "users", user.uid);
       const docSnap = await getDoc(docRef);
-      console.log("object  :>> ", docSnap.data());
-      return { name: user.displayName, userId: user.uid, email: user.email };
+      console.log(user.stsTokenManager);
+      return {
+        name: user.displayName,
+        userId: user.uid,
+        email: user.email,
+        accessToken: user.accessToken,
+        refreshToken: user.refreshToken,
+        favoritesNannies: docSnap.data()?.favoritesNannies || [],
+      };
     } catch (error) {
       toast.warn(error.message);
       return thunkAPI.rejectWithValue(error.message);
@@ -61,6 +70,42 @@ export const userSignOut = createAsyncThunk(
     try {
       await signOut(auth);
       return;
+    } catch (error) {
+      toast.warn(error.message);
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const getNannies = createAsyncThunk(
+  "get/nannies",
+  async (_, thunkAPI) => {
+    try {
+      const response = await getDocs(collection(dbFirestore, "nannies"));
+      const responseData = response.docs.map((docs) => ({
+        ...docs.data(),
+        id: docs.id,
+      }));
+
+      return responseData;
+    } catch (err) {
+      toast.warn(err.message);
+      return thunkAPI.rejectWithValue(err.message);
+    }
+  }
+);
+
+export const updateFavorit = createAsyncThunk(
+  "update/favorit",
+  async (data, thunkAPI) => {
+    try {
+      if (!data.userId) {
+        return;
+      }
+
+      await setDoc(doc(dbFirestore, "users", data.userId), {
+        favoritesNannies: data.favoritesArray,
+      });
     } catch (error) {
       toast.warn(error.message);
       return thunkAPI.rejectWithValue(error.message);

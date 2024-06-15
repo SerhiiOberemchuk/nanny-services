@@ -1,11 +1,16 @@
 import style from "./Header.module.css";
 import icons from "../../assets/icons/iconsSprite.svg";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { userSignOut } from "../../redux/users/operation";
 import { auth } from "../../Api/firebaseConfig";
+import { cleanFavorites } from "../../redux/users/usersSlice";
 
 function LogoutButton() {
   const dispatch = useDispatch();
+  const handleLogOut = () => {
+    dispatch(userSignOut());
+    dispatch(cleanFavorites());
+  };
   return (
     <div className={style.listLogout}>
       <div className={style.userName}>
@@ -19,7 +24,7 @@ function LogoutButton() {
       <button
         type="button"
         className={style.logoutButton}
-        onClick={() => dispatch(userSignOut())}
+        onClick={handleLogOut}
       >
         Log out
       </button>

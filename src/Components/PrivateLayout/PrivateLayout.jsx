@@ -5,9 +5,11 @@ import style from "./PrivateLayout.module.css";
 import Container from "../CommonComponents/Container/Container";
 import Header from "./Header";
 import { useSelector } from "react-redux";
-import { selectorIsLoadingUsers } from "../../redux/users/selectors";
+import {
+  selectorIsLoadingNannies,
+  selectorIsLoadingUsers,
+} from "../../redux/users/selectors";
 import LoadingSpiner from "../CommonComponents/Container/LoadingSpiner/LoadingSpiner";
-import { selectorIsLoadingNannies } from "../../redux/nannies/selectors";
 
 function PrivateLayout() {
   const isLoadingUsers = useSelector(selectorIsLoadingUsers);

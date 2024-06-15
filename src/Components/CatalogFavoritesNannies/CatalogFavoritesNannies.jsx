@@ -2,7 +2,7 @@ import React from "react";
 import Container from "../CommonComponents/Container/Container";
 import ListSection from "../NanniesList/ListSection/ListSection";
 import { useSelector } from "react-redux";
-import { selectorFavoritesNannies } from "../../redux/nannies/selectors";
+import { selectorFavoritesNannies } from "../../redux/users/selectors";
 
 function CatalogFavoritesNannies() {
   const nanniesCatalog = useSelector(selectorFavoritesNannies);
