@@ -31,8 +31,6 @@ function HomePageContent() {
           favoritesNannies: docSnap.data()?.favoritesNannies || [],
         })
       );
-    } else {
-      console.log("User is signed out");
     }
   });
   return (

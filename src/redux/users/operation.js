@@ -1,6 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
   createUserWithEmailAndPassword,
+  getAuth,
+  onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
   updateProfile,
@@ -23,11 +25,8 @@ export const userSignUp = createAsyncThunk(
       await updateProfile(user, { displayName: name });
 
       return {
-        email: user.email,
         name,
         userId: user.uid,
-        accessToken: user.accessToken,
-        refreshToken: user.refreshToken,
       };
     } catch (error) {
       toast.warn(error.message);
@@ -48,17 +47,13 @@ export const userLogIn = createAsyncThunk(
       const user = response.user;
       const docRef = doc(dbFirestore, "users", user.uid);
       const docSnap = await getDoc(docRef);
-      console.log(user.stsTokenManager);
       return {
         name: user.displayName,
         userId: user.uid,
-        email: user.email,
-        accessToken: user.accessToken,
-        refreshToken: user.refreshToken,
         favoritesNannies: docSnap.data()?.favoritesNannies || [],
       };
     } catch (error) {
-      toast.warn(error.message);
+      toast.warn("User`s email or password is wrong");
       return thunkAPI.rejectWithValue(error.message);
     }
   }

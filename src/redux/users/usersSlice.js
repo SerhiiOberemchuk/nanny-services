@@ -32,8 +32,10 @@ const usersSlice = createSlice({
       state.isLoggedIn = true;
       state.userId = payload.userId;
       state.userName = payload.name;
-      state.userEmail = payload.email;
       state.favoritesNannies = payload.favoritesNannies || [];
+    },
+    setSortOption: (state, { payload }) => {
+      state.sortOption = payload;
     },
   },
   extraReducers: (builder) => {
@@ -44,7 +46,6 @@ const usersSlice = createSlice({
         state.isLoggedIn = true;
         state.userId = payload.userId;
         state.userName = payload.name;
-        state.userEmail = payload.email;
       })
       .addCase(userSignUp.rejected, handleRejected)
       .addCase(userLogIn.pending, handlePending)
@@ -53,7 +54,6 @@ const usersSlice = createSlice({
         state.isLoggedIn = true;
         state.userId = payload.userId;
         state.userName = payload.name;
-        state.userEmail = payload.email;
         state.favoritesNannies = payload.favoritesNannies || [];
       })
       .addCase(userLogIn.rejected, handleRejected)
@@ -65,11 +65,15 @@ const usersSlice = createSlice({
         state.userName = "";
       })
       .addCase(userSignOut.rejected, handleRejected)
-      .addCase(updateFavorit.pending, handlePending)
-      .addCase(updateFavorit.fulfilled, (state, action) => {
-        state.loading = false;
+      .addCase(updateFavorit.pending, (state) => {
+        state.loadingFavorites = true;
       })
-      .addCase(updateFavorit.rejected, handleRejected)
+      .addCase(updateFavorit.fulfilled, (state) => {
+        state.loadingFavorites = false;
+      })
+      .addCase(updateFavorit.rejected, (state) => {
+        state.loadingFavorites = false;
+      })
       .addCase(getNannies.pending, handlePending)
       .addCase(getNannies.fulfilled, (state, { payload }) => {
         state.loading = false;
@@ -90,17 +94,12 @@ const usersSlice = createSlice({
 
 function handlePending(state) {
   state.loading = true;
-  state.error = null;
 }
 
 function handleRejected(state, action) {
   state.loading = false;
-  state.error = action.error.message;
   state.userId = "";
   state.userName = "";
-  state.userEmail = "";
-  state.accessToken = null;
-  state.refreshToken = null;
 }
 
 export const {
@@ -110,6 +109,7 @@ export const {
   updateFavoritesState,
   cleanFavorites,
   setUserData,
+  setSortOption,
 } = usersSlice.actions;
 
 export default usersSlice.reducer;

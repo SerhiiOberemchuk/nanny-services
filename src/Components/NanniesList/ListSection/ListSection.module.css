@@ -127,6 +127,32 @@
     fill: gold;
 }
 
+@keyframes colorChange {
+    0% {
+        stroke: red;
+    }
+
+    25% {
+        stroke: orange;
+    }
+
+    50% {
+        stroke: yellow;
+    }
+
+    75% {
+        stroke: green;
+    }
+
+    100% {
+        stroke: blue;
+    }
+}
+
+.iconSvgFavorite.animate {
+    animation: colorChange 2s infinite;
+}
+
 .locationSection {
     display: flex;
     align-items: center;
