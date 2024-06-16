@@ -1,0 +1,1 @@
+import{u as e,v as n,j as s,C as a}from"./index-DZ_KHQPY.js";import{L as o}from"./ListSection-CalgoKxC.js";function r(){const t=e(n);return s.jsx(a,{children:s.jsx(o,{nanniesCatalog:t})})}function c(){return s.jsx(r,{})}export{c as default};
